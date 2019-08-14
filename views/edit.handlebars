@@ -1,0 +1,45 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <form action="/record/edit/{{record.id}}?_method=PUT" method="POST"
+      class="needs-validation text-center border border-light  p-5 mt-5" data-toggle="validator">
+      <h1>編輯支出</h1>
+      <h6 class="text-left ml-2 mt-2"><span class="text-danger">*</span>為必填資訊</h6>
+      <!-- Name -->
+      <div class="md-form form-group">
+        <input type="text" id="name" class="form-control" data-error='名稱為必填欄位' name="name" value="{{record.name}}"
+          required>
+        <label for="name">Name<span class="text-danger">*</span></label>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- date --}}
+      <div class="md-form form-group">
+        <input type="date" class="form-control" name="date" value="{{record_date}}" min="2019-01-01" max="2019-12-31"
+          data-error="請選擇一個日期" required>
+        <label for="date">Date<span class="text-danger">*</span></label>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- category --}}
+      <div class="md-form form-group">
+        <select id="category" name="category" class="custom-select form-control" required data-error="請選取一個清單項目喔">
+          <option value="">選擇支出類別<span class="text-danger">*</span></option>
+          <option value="食" {{if_selected record.category '食'}}>食</option>
+          <option value="衣" {{if_selected record.category '衣'}}>衣</option>
+          <option value="住" {{if_selected record.category '住'}}>住</option>
+          <option value="行" {{if_selected record.category '行'}}>行</option>
+          <option value="其他" {{if_selected record.category '其他'}}>其他</option>
+        </select>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- amount --}}
+      <div class="md-form form-group">
+        <input type="text" class="form-control" name="amount" pattern="^[0-9]*$" data-pattern-error="請輸入一個整數金額"
+          value="{{record.amount}}" required>
+        <label for="amount">amount<span class="text-danger">*</span></label>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- 提交按鈕 --}}
+      <button class="btn btn-primary btn-sm" type="submit">送出編輯</button>
+      <a href="/" class="btn btn-danger btn-sm">取消編輯</a>
+    </form>
+  </div>
+</div>

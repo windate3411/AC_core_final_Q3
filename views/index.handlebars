@@ -1,0 +1,100 @@
+<div class="container mt-5 text-center">
+  <div class="row mb-3">
+    <div class="col md-6">
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          月份
+        </a>
+        {{!-- create the months filter dropdown --}}
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          {{#each months_array}}
+          <a class="dropdown-item" href="/?months={{this}}&category={{../category}}">{{this}}</a>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="col md-6">
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          類別
+        </a>
+        {{!-- create the category filter dropdown --}}
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          {{#each category_array}}
+          <a class="dropdown-item" href="/?months={{../months}}&category={{this}}">{{this}}</a>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{!-- display totalAmount --}}
+  <div class="row mt-3 mb-3">
+    <div class="col text-center">
+      <h1 class="text-center">{{months}}月份，{{#if category}}在【{{category}}】類別的{{/if}}支出總金額為: {{totalAmount}} 元</h1>
+    </div>
+  </div>
+  {{!-- if there is not any records,show headsup  --}}
+  {{> headsup}}
+
+  {{!-- display records --}}
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="list-group">
+        {{#each records}}
+        {{!-- list the records from db  --}}
+        <li class="d-flex align-items-center">
+          {{{get_image ../category_image this.category}}}
+          <span>{{this.name}}</span>
+          <span>{{get_date this.date}}</span>
+          <span>金額:{{this.amount}}元</span>
+          <div class="">
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#a{{{this.id}}}"
+              style="display:inline">
+              Delete
+            </button>
+            <a href="/record/edit/{{this.id}}" class="btn btn-success btn-sm">edit</a>
+          </div>
+        </li>
+
+        {{!-- modal --}}
+        <div class="modal fade" style="font-family:'Noto Sans TC', sans-serif;" id="a{{{this.id}}}" tabindex="-1"
+          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">確認視窗</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                你即將要刪除 {{{this.name}}} 這筆支出資料，刪除後資料將無法復原，確定刪除嗎?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form action="/record/{{this.id}}?_method=DELETE" method="POST" style="display:inline">
+                  <button type='submit' class="btn btn-primary">確認刪除</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nothing"></div>
+
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+
+  {{!-- show the new button if there are some records shown --}}
+  {{#if records}}
+  <div class="row mt-5">
+    <div class="col-md-12 text-center">
+      <a href="/record/new" class="btn btn-info btn-sm">新增支出</a>
+    </div>
+  </div>
+  {{/if}}
+
+</div>

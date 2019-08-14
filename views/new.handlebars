@@ -1,0 +1,51 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <form action="/record/new" method="POST" class="needs-validation text-center border border-light  p-5 mt-5"
+      data-toggle="validator">
+      <h1>請輸入你的支出</h1>
+      <h6 class="text-left ml-2 mt-2"><span class="text-danger">*</span>為必填資訊</h6>
+      {{#each errors}}
+      <div class="">
+        <div class="alert alert-danger">
+          {{this.msg}}
+        </div>
+      </div>
+      {{/each}}
+      <!-- Name -->
+      <div class="md-form form-group">
+        <input type="text" id="name" class="form-control" data-error='名稱為必填欄位' name="name" required>
+        <label for="name">Name<span class="text-danger">*</span></label>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- date --}}
+      <div class="md-form form-group">
+        <input type="date" class="form-control" name="date" value="{{result}}" min="2019-01-01" max="2019-12-31"
+          data-error="請選擇一個日期" required>
+        <label for="date">Date<span class="text-danger">*</span></label>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- category --}}
+      <div class="md-form form-group">
+        <select id="category" name="category" class="custom-select form-control" required data-error="請選取一個清單項目喔">
+          <option value="" selected>選擇支出類別<span class="text-danger">*</span></option>
+          <option value="食">食</option>
+          <option value="衣">衣</option>
+          <option value="住">住</option>
+          <option value="行">行</option>
+          <option value="其他">其他</option>
+        </select>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- amount --}}
+      <div class="md-form form-group">
+        <input type="text" class="form-control" name="amount" value="" pattern="^[0-9]*$" data-error='金額為必填欄位'
+          data-pattern-error="請輸入一個整數金額" required>
+        <label for="amount">amount<span class="text-danger">*</span></label>
+        <div class="help-block with-errors"></div>
+      </div>
+      {{!-- 提交按鈕 --}}
+      <button class="btn btn-primary btn-sm" type="submit">新增支出</button>
+      <a href="/" class="btn btn-danger btn-sm">取消新增</a>
+    </form>
+  </div>
+</div>
